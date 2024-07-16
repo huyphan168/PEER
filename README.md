@@ -14,6 +14,12 @@ Implementation of paper [Mixture of A Million Experts](https://arxiv.org/pdf/240
 ```bash
 torchrun --nproc_per_node=N --nnodes=1 main.py
 ```
+## Training Process
+
+Wikitext-103 2.2B model, 8 layers, 8 head, dimension = 256, 512x512 experts.
+
+https://wandb.ai/ai4sw/peer_language_model/runs/2snbj2ma
+
 
 ## Citations
 
