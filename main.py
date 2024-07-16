@@ -1,10 +1,25 @@
 import os
+import torch
 import torch.distributed as dist
 from torch.nn.parallel import DistributedDataParallel as DDP
 from torch.utils.data.distributed import DistributedSampler
+from torch.utils.data import DataLoader
+from transformers import GPT2Tokenizer
 from peer.dataset import PileDataset
 from peer.model import PEERLanguageModel
 from peer.trainer import train, validate
+import matplotlib.pyplot as plt
+
+def plot_losses(train_losses, val_losses, epoch, save_dir):
+    plt.figure(figsize=(10, 5))
+    plt.plot(train_losses, label='Train Loss')
+    plt.plot(val_losses, label='Validation Loss')
+    plt.xlabel('Batch')
+    plt.ylabel('Loss')
+    plt.title(f'Epoch {epoch+1} Losses')
+    plt.legend()
+    plt.savefig(os.path.join(save_dir, f'epoch_{epoch+1}_losses.png'))
+    plt.close()
 
 # main execution
 if __name__ == "__main__":
@@ -46,6 +61,7 @@ if __name__ == "__main__":
     
     if local_rank == 0:
         print("Number of parameters:", sum(p.numel() for p in model.parameters()))
+        os.makedirs('plots', exist_ok=True)
     
     # Training and validation loop
     best_val_loss = float('inf')
@@ -53,11 +69,14 @@ if __name__ == "__main__":
         train_sampler.set_epoch(epoch)
         if local_rank == 0:
             print(f"Epoch Training {epoch+1}/{num_epochs}")
-        train_loss = train(model, train_loader, optimizer, device)
+        train_loss, train_batch_losses = train(model, train_loader, optimizer, device)
         if local_rank == 0:
             print(f"Epoch Validation {epoch+1}/{num_epochs}")
-            val_loss = validate(model, val_loader, device)
-            print(f"Epoch {epoch+1}/{num_epochs}, Train Loss: {train_loss:.4f}, Val Loss: {val_loss:.4f}")
+            val_loss, val_perplexity, val_batch_losses = validate(model, val_loader, device)
+            print(f"Epoch {epoch+1}/{num_epochs}, Train Loss: {train_loss:.4f}, Val Loss: {val_loss:.4f}, Val Perplexity: {val_perplexity:.4f}")
+            
+            # Plot and save losses
+            plot_losses(train_batch_losses, val_batch_losses, epoch, 'plots')
         
             # Save the best model
             if val_loss < best_val_loss:
