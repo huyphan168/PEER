@@ -1,3 +1,6 @@
+from datasets import load_dataset
+from torch.utils.data import Dataset
+
 class PileDataset(Dataset):
     def __init__(self, file_path, tokenizer, split='train', max_length=512):
         self.tokenizer = tokenizer
