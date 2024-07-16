@@ -18,7 +18,8 @@ torchrun --nproc_per_node=N --nnodes=1 main.py
 
 Wikitext-103 2.2B model, 8 layers, 8 head, dimension = 256, 512x512 experts.
 
-https://wandb.ai/ai4sw/peer_language_model/runs/2snbj2ma
+![image](https://github.com/user-attachments/assets/6083f7a1-8bd4-4c3a-bd7f-d179a6964cbc)
+
 
 
 ## Citations
