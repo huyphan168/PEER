@@ -6,7 +6,7 @@
 - [x] Complete the overview distributed training on wikitext-103
 - [ ] Reproduce the results on wikitext-103 (comparing on dense model and MoE)
 - [ ] Implement the model on other datasets
-- [ ] Pre-training 1B model on Pile
+- [ ] Pre-training 1.5B model on 2024 subset FineWeb
 
 Implementation of paper [Mixture of A Million Experts](https://arxiv.org/pdf/2407.04153v1) by Phan Nhat Huy
 
@@ -18,9 +18,7 @@ torchrun --nproc_per_node=N --nnodes=1 main.py
 
 Wikitext-103 2.2B model, 8 layers, 8 head, dimension = 256, 512x512 experts.
 
-<img src="https://github.com/user-attachments/assets/6083f7a1-8bd4-4c3a-bd7f-d179a6964cbc" alt="image" width="300">
-
-
+<img src="https://github.com/user-attachments/assets/6e10efee-06eb-4550-abba-8dd85eeb4516" alt="image" width="300">
 
 ## Citations
 
