@@ -20,6 +20,15 @@ Wikitext-103 2.2B model, 8 layers, 8 head, dimension = 256, 512x512 experts.
 
 <img src="https://github.com/user-attachments/assets/6e10efee-06eb-4550-abba-8dd85eeb4516" alt="image" width="300">
 
+## Results Overview
+
+Validation Perplexity
+
+| Method                                              | Wikitext-103 Perplexity | 
+|-----------------------------------------------------|---------------|
+| PEER                                     | 7.19        | 
+| FFW                              | on-going        | 
+
 ## Citations
 
 ```bibtex
