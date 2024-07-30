@@ -106,8 +106,8 @@ class PEER(nn.Module):
             head_expert_offsets = torch.arange(self.heads, device=x.device) * self.num_experts
             indices = indices + head_expert_offsets.view(1, 1, -1, 1)
 
-        weights_down = self.weight_down_embed(pk_indices)
-        weights_up = self.weight_up_embed(pk_indices)
+        weights_down = self.weight_down_embed(indices)
+        weights_up = self.weight_up_embed(indices)
 
         x = einsum(x, weights_down, 'b n d, b n h k d -> b n h k')
 
